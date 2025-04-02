@@ -5,17 +5,16 @@ import UserListItem from "./UserListItem";
 import userService from "../services/userService";
 
 export default function Userlist() {
-    const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([]);
 
-    useEffect(() => {
-        userService.getAll()
-            .then(result => {
-                setUsers(result)
-            })
-    }, []);
-
+  useEffect(() => {
+    userService.getAll().then((result) => {
+      setUsers(result);
+    });
 
     
+  }, []);
+
   return (
     <section class="card users-container">
       <Search />
@@ -171,8 +170,11 @@ export default function Userlist() {
             </tr>
           </thead>
           <tbody>
-            {/* <!-- Table row component --> */}
-           <UserListItem />
+            {users.map((user) => 
+                (<UserListItem
+                key={user._id}
+                {...user}/>
+            ))}
           </tbody>
         </table>
       </div>
