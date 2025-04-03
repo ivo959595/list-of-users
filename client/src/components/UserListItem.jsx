@@ -1,28 +1,24 @@
 import React from "react";
+import { fromIsoDate } from "../utils/dateUtils";
 
-export default function UserListIem(
- {firstName,
+export default function UserListIem({
+  firstName,
   lastName,
   email,
   phoneNumber,
   createdAt,
-  imageUrl
-}
-) {
+  imageUrl,
+}) {
   return (
     <tr>
       <td>
-        <img
-          src={imageUrl}
-          alt={`${firstName}'s profile`}
-          class="image"
-        />
+        <img src={imageUrl} alt={`${firstName}'s profile`} class="image" />
       </td>
       <td>{firstName}</td>
       <td>{lastName}</td>
       <td>{email}</td>
       <td>{phoneNumber}</td>
-      <td>{createdAt}</td>
+      <td>{fromIsoDate(createdAt)}</td>
 
       <td class="actions">
         <button class="btn edit-btn" title="Edit">
