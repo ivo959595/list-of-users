@@ -6,7 +6,7 @@ import userService from "../services/userService";
 import UserCreate from "./UserCreate.jsx";
 export default function Userlist() {
   const [users, setUsers] = useState([]);
-  const [showCreate, setShowCreate] = useState(false)
+  const [showCreate, setShowCreate] = useState(false);
 
   useEffect(() => {
     userService.getAll().then((result) => {
@@ -14,15 +14,21 @@ export default function Userlist() {
     });
   }, []);
 
-  const addUserClickHandler = () => {
-    setShowCreate(true)
+  const createUserClickHandler = () => {
+    setShowCreate(true);
   };
+
+  const closeCreateUserClickHandler = () => {
+        setShowCreate(false)
+  }
+
+
 
   return (
     <section class="card users-container">
       <Search />
 
-      {showCreate && <UserCreate />}
+      {showCreate && <UserCreate onClose={closeCreateUserClickHandler}/>}
 
       {/*<!-- Table component -->*/}
       <div class="table-wrapper">
@@ -184,7 +190,7 @@ export default function Userlist() {
 
       {/* <!-- New user button  -->*/}
 
-      <button class="btn-add btn" onClick={addUserClickHandler}>
+      <button class="btn-add btn" onClick={createUserClickHandler}>
         Add new user
       </button>
 
