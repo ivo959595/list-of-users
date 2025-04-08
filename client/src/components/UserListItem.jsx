@@ -2,12 +2,14 @@ import React from "react";
 import { fromIsoDate } from "../utils/dateUtils";
 
 export default function UserListIem({
+  _id,
   firstName,
   lastName,
   email,
   phoneNumber,
   createdAt,
   imageUrl,
+  onInfoClick,
 }) {
   return (
     <tr>
@@ -55,7 +57,7 @@ export default function UserListIem({
             ></path>
           </svg>
         </button>
-        <button class="btn info-btn" title="Info">
+        <button class="btn info-btn" title="Info" onClick={()=>onInfoClick(_id)}>
           <svg
             aria-hidden="true"
             focusable="false"

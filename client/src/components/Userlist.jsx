@@ -4,9 +4,11 @@ import Pagination from "./Pagination";
 import UserListItem from "./UserListItem";
 import userService from "../services/userService";
 import UserCreate from "./UserCreate.jsx";
+import UserInfo from "./UserInfo.jsx";
 export default function Userlist() {
   const [users, setUsers] = useState([]);
   const [showCreate, setShowCreate] = useState(false);
+  const [userIdInfo, setUserIdInfo] = useState();
 
   useEffect(() => {
     userService.getAll().then((result) => {
@@ -23,28 +25,33 @@ export default function Userlist() {
   };
 
   const saveCreateUserClickHandler = async (e) => {
-    e.preventDefault()
-    const formData = new FormData(e.target)
-    const userData = Object.fromEntries(formData)
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const userData = Object.fromEntries(formData);
 
-    const newUser = await userService.create(userData)
+    const newUser = await userService.create(userData);
 
-    setUsers(state => [...state, newUser])
+    setUsers((state) => [...state, newUser]);
 
+    setShowCreate(false);
+  };
 
-    setShowCreate(false)
-    console.log(formValues)
+  const userInfoClickHandler = (userId) => {
+    setUserIdInfo(userId)
   };
 
   return (
     <section class="card users-container">
       <Search />
 
-      {showCreate && 
-        <UserCreate 
-        onClose={closeCreateUserClickHandler} 
-        onSave={saveCreateUserClickHandler}
-      />}
+      {showCreate && (
+        <UserCreate
+          onClose={closeCreateUserClickHandler}
+          onSave={saveCreateUserClickHandler}
+        />
+      )}
+
+      {userIdInfo && <UserInfo userId={userIdInfo} />}
 
       {/*<!-- Table component -->*/}
       <div class="table-wrapper">
@@ -198,13 +205,15 @@ export default function Userlist() {
           </thead>
           <tbody>
             {users.map((user) => (
-              <UserListItem key={user._id} {...user} />
+              <UserListItem
+                key={user._id}
+                onInfoClick={userInfoClickHandler}
+                {...user}
+              />
             ))}
           </tbody>
         </table>
       </div>
-
-      {/* <!-- New user button  -->*/}
 
       <button class="btn-add btn" onClick={createUserClickHandler}>
         Add new user

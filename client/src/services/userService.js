@@ -9,6 +9,12 @@ export default {
     return users;
   },
   async create(userData) {
+    const { country, city, street, streetNUmber, ...postData } = userData;
+
+    postData.address = { country, city, street, streetNUmber };
+    postData.createdAt = new Date().toISOString();
+    postData.updatedAt = new Date().toISOString();
+
     const response = await fetch(baseUrl, {
       method: "POST",
       headers: {
