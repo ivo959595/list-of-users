@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import userService from "../services/userService";
+import { fromIsoDate } from "../utils/dateUtils";
 
-export default function UserInfo(onInfoClick) {
+export default function UserInfo({userId}) {
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    userService.getOne(userId).then((result) => {
+      setUser(result);
+    });
+  }, [userId]);
+
   return (
     <div class="overlay">
       <div class="backdrop"></div>
@@ -28,36 +38,37 @@ export default function UserInfo(onInfoClick) {
           </header>
           <div class="content">
             <div class="image-container">
-              <img
-                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                alt=""
-                class="image"
-              />
+              <img src={user.imageUrl} alt="" class="image" />
             </div>
             <div class="user-details">
               <p>
-                User Id: <strong>62bb0c0eda039e2fdccba57b</strong>
+                User Id: <strong>{user._id}</strong>
               </p>
               <p>
                 Full Name:
-                <strong> Peter Johnson </strong>
+                <strong>
+                  {" "}
+                  {user.firstName} {user.lastName}{" "}
+                </strong>
               </p>
               <p>
-                Email: <strong>peter@abv.bg</strong>
+                Email: <strong>{user.email}</strong>
               </p>
               <p>
-                Phone Number: <strong>0812345678</strong>
+                Phone Number: <strong>{user.phoneNumber}</strong>
               </p>
               <p>
                 Address:
-                <strong> Bulgaria, Sofia, Aleksandar Malinov 78 </strong>
+                <strong>
+                  {user.country} {user.city} {user.street} {user.sreetNumber}
+                </strong>
               </p>
 
               <p>
-                Created on: <strong>Wednesday, June 28, 2022</strong>
+                Created on: <strong>{fromIsoDate(user.createdAt)}</strong>
               </p>
               <p>
-                Modified on: <strong>Thursday, June 29, 2022</strong>
+                Modified on: <strong>{fromIsoDate(user.updatedAt)}</strong>
               </p>
             </div>
           </div>

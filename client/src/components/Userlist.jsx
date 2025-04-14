@@ -35,7 +35,7 @@ export default function Userlist() {
 
     setShowCreate(false);
   };
-
+ 
   const userInfoClickHandler = (userId) => {
     setUserIdInfo(userId)
   };
