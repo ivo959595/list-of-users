@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import userService from "../services/userService";
 import { fromIsoDate } from "../utils/dateUtils";
 
-export default function UserInfo({userId}) {
+export default function UserInfo({userId, onClose}) {
   const [user, setUser] = useState({});
 
   useEffect(() => {
@@ -13,12 +13,12 @@ export default function UserInfo({userId}) {
 
   return (
     <div class="overlay">
-      <div class="backdrop"></div>
+      <div class="backdrop" onClick={onClose} ></div>
       <div class="modal">
         <div class="detail-container">
           <header class="headers">
             <h2>User Detail</h2>
-            <button class="btn close">
+            <button class="btn close" onClick={onClose}>
               <svg
                 aria-hidden="true"
                 focusable="false"

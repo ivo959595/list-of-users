@@ -8,7 +8,7 @@ import UserInfo from "./UserInfo.jsx";
 export default function Userlist() {
   const [users, setUsers] = useState([]);
   const [showCreate, setShowCreate] = useState(false);
-  const [userIdInfo, setUserIdInfo] = useState();
+  const [userIdInfo, setUserIdInfo] = useState(null);
 
   useEffect(() => {
     userService.getAll().then((result) => {
@@ -40,6 +40,11 @@ export default function Userlist() {
     setUserIdInfo(userId)
   };
 
+  const userInfoCloseHandler = () => {
+    setUserIdInfo(null)
+  }
+
+
   return (
     <section class="card users-container">
       <Search />
@@ -51,7 +56,12 @@ export default function Userlist() {
         />
       )}
 
-      {userIdInfo && <UserInfo userId={userIdInfo} />}
+      {userIdInfo && 
+      (<UserInfo
+          userId={userIdInfo} 
+          onClose={userInfoCloseHandler}
+          />
+      )}
 
       {/*<!-- Table component -->*/}
       <div class="table-wrapper">
